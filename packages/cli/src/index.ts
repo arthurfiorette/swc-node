@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 const spawn = require('cross-spawn') as typeof import('cross-spawn')
@@ -8,10 +8,9 @@ import { printHelp, printReplNotSupported, printVersion } from './cli-output'
 
 const pkgJson = require('../package.json')
 
-const registerPath = require.resolve('@swc-node/register')
-const registerDirectory = dirname(registerPath)
-const esmRegisterPath = resolve(registerDirectory, 'esm/esm-register.mjs')
-const esmRegisterUrl = pathToFileURL(esmRegisterPath).toString()
+const localCjsRegisterPath = resolve(__dirname, '..', 'register-cjs.js')
+const localEsmRegisterPath = resolve(__dirname, '..', 'register-esm.js')
+const localEsmRegisterUrl = pathToFileURL(localEsmRegisterPath).toString()
 
 const swcArgs = parseCliArgs(process.argv.slice(2))
 
@@ -35,7 +34,7 @@ if (swcArgs.repl) {
 // (ESM entrypoints importing CJS, or CJS requiring TS) without brittle mode detection.
 const result = spawn.sync(
   process.execPath,
-  ['--enable-source-maps', '-r', registerPath, '--import', esmRegisterUrl, ...swcArgs.argv],
+  ['--enable-source-maps', '-r', localCjsRegisterPath, '--import', localEsmRegisterUrl, ...swcArgs.argv],
   {
     stdio: 'inherit',
     env: swcArgs.tsconfigPath

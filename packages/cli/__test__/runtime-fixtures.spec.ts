@@ -1,3 +1,5 @@
+import { cp, mkdtemp, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
 import test from 'ava'
@@ -110,4 +112,22 @@ test('auto-discovers TypeScript test file patterns with --test', (t) => {
   t.true(result.stdout.includes('pattern-test.ts'))
   t.true(result.stdout.includes('pattern-test/epsilon.ts'))
   t.false(result.stdout.includes('nonmatch.ts should not be discovered'))
+})
+
+test.serial('works when cwd does not have @swc-node/register installed', async (t) => {
+  const sourceDir = join(fixturesDir, 'esm-only')
+  const tempDir = await mkdtemp(join(tmpdir(), 'swc-node-cli-no-register-'))
+
+  try {
+    await cp(sourceDir, tempDir, { recursive: true })
+
+    const result = runCli(['./index.ts'], {
+      cwd: tempDir,
+    })
+
+    t.is(result.status, 0)
+    t.is(result.stdout.trim(), 'esm-ok')
+  } finally {
+    await rm(tempDir, { recursive: true, force: true })
+  }
 })

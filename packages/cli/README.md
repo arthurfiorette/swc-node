@@ -12,6 +12,7 @@
 - Node watch mode support (`--watch`, `--watch-path`, `--watch-preserve-output`).
 - Node test runner support (`--test`).
 - Decorator metadata support via tsconfig (`experimentalDecorators` + `emitDecoratorMetadata`).
+- No extra swc dependencies required.
 
 ## Usage
 
@@ -100,3 +101,14 @@ If you need a programmable API or direct preload hooks (`-r` / `--import`), use 
 - Watch mode is delegated to Node (`--watch`) rather than custom orchestration.
 - Running `swc-node` without an entrypoint is blocked (REPL mode is not supported).
 - If you need a richer REPL/workflow tool, use [`tsx`](https://github.com/privatenumber/tsx).
+
+## Thanks
+
+Thanks to these projects for reference and preceding work:
+
+- [`swrun`](https://www.npmjs.com/package/swrun)
+- [`swcx`](https://www.npmjs.com/package/swcx)
+- [`swc-node`](https://www.npmjs.com/package/swc-node)
+- [`oxc-node`](https://www.npmjs.com/package/oxc-node)
+- [`tsx`](https://www.npmjs.com/package/tsx)
+- [`ts-node`](https://www.npmjs.com/package/ts-node)
