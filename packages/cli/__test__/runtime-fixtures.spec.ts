@@ -52,6 +52,15 @@ test('runs non-erasable TypeScript syntax (enum + namespace)', (t) => {
   t.is(result.stdout.trim(), '42')
 })
 
+test('supports emitDecoratorMetadata from tsconfig', (t) => {
+  const result = runCli(['./index.ts'], {
+    cwd: join(fixturesDir, 'decorator-metadata'),
+  })
+
+  t.is(result.status, 0)
+  t.is(result.stdout.trim(), 'metadata-ok')
+})
+
 test('works with regular node_modules packages', (t) => {
   const result = runCli(['./index.ts'], {
     cwd: join(fixturesDir, 'node-modules'),

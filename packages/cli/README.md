@@ -4,13 +4,22 @@
 
 `@swc-node/cli` is a tiny Node-first CLI powered by `@swc-node/register`.
 
+## Features
+
+- TypeScript in both CommonJS and ESM projects.
+- Hybrid module graphs (CJS importing ESM and ESM importing CJS).
+- `compilerOptions.paths` / `baseUrl` path alias resolution from tsconfig.
+- Node watch mode support (`--watch`, `--watch-path`, `--watch-preserve-output`).
+- Node test runner support (`--test`).
+- Decorator metadata support via tsconfig (`experimentalDecorators` + `emitDecoratorMetadata`).
+
 ## Usage
 
 ### CLI
 
 ```bash
 swc-node index.ts
-swc-node --conditions=dev src/index.ts --port=3000
+swc-node --env-file=.env src/index.ts --port=3000
 ```
 
 ### Inline code (`-e` / `-p`)
@@ -24,6 +33,22 @@ swc-node -p "const n: number = 41; n + 1"
 
 ```bash
 swc-node --test ./math.test.ts
+```
+
+### Shebang scripts
+
+For portable scripts, prefer putting options in `tsconfig.json` and keeping the shebang minimal:
+
+```ts
+#!/usr/bin/env swc-node
+
+console.log('Hello, world!')
+```
+
+Then run the script directly:
+
+```bash
+./script.ts
 ```
 
 ### CLI helpers
@@ -54,6 +79,10 @@ SWC_NODE_PROJECT=./tsconfig.dev.json swc-node src/index.ts
 swc-node --tsconfig ./tsconfig.dev.json src/index.ts
 # imports like `@utils/foo` resolve from tsconfig paths
 ```
+
+## Need lower-level APIs?
+
+If you need a programmable API or direct preload hooks (`-r` / `--import`), use [`@swc-node/register`](https://www.npmjs.com/package/@swc-node/register).
 
 ## Notes
 
