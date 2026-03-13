@@ -165,6 +165,9 @@ Cargo.lock
 # idea
 .idea/
 
+# Serena MCP
+.serena
+
 *.node
 lib
 artifacts

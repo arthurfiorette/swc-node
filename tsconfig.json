@@ -28,17 +28,18 @@
     "paths": {
       "@swc-node/core": ["./core/index.ts"],
       "@swc-node/register/*": ["./register/*"],
-      "@integrate/*": ["./integrate/src/*"],
-    },
+      "@integrate/*": ["./integrate/src/*"]
+    }
   },
   "references": [
+    { "path": "./packages/cli" },
     { "path": "./packages/core" },
     { "path": "./packages/register" },
     { "path": "./packages/register/tsconfig.esm.json" },
     { "path": "./packages/jest" },
     { "path": "./packages/sourcemap-support" },
-    { "path": "./packages/loader" },
+    { "path": "./packages/loader" }
   ],
   "include": [],
-  "files": [],
+  "files": []
 }
