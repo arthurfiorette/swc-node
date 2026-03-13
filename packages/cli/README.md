@@ -35,6 +35,17 @@ swc-node -p "const n: number = 41; n + 1"
 swc-node --test ./math.test.ts
 ```
 
+Without an explicit path, `swc-node --test` uses Node's default test discovery patterns, including TypeScript variants like:
+
+```text
+**/*.test.?[cm][jt]s
+**/*-test.?[cm][jt]s
+**/*_test.?[cm][jt]s
+**/test-*.?[cm][jt]s
+**/test.?[cm][jt]s
+**/test/**/*.?[cm][jt]s
+```
+
 ### Shebang scripts
 
 For portable scripts, prefer putting options in `tsconfig.json` and keeping the shebang minimal:

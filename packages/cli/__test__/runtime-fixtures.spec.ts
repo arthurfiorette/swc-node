@@ -96,3 +96,18 @@ test('supports tsconfig paths with explicit --tsconfig', (t) => {
   t.is(result.status, 0)
   t.is(result.stdout.trim(), 'paths-ok')
 })
+
+test('auto-discovers TypeScript test file patterns with --test', (t) => {
+  const result = runCli(['--test'], {
+    cwd: join(fixturesDir, 'test-discovery'),
+  })
+
+  t.is(result.status, 0)
+  t.true(result.stdout.includes('pattern-alpha.test.ts'))
+  t.true(result.stdout.includes('pattern-beta-test.cts'))
+  t.true(result.stdout.includes('pattern-gamma_test.mts'))
+  t.true(result.stdout.includes('pattern-test-delta.ts'))
+  t.true(result.stdout.includes('pattern-test.ts'))
+  t.true(result.stdout.includes('pattern-test/epsilon.ts'))
+  t.false(result.stdout.includes('nonmatch.ts should not be discovered'))
+})
